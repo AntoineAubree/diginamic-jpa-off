@@ -46,6 +46,9 @@ public class Produit {
 	@JoinTable(name = "produit_ingredient", joinColumns = @JoinColumn(name = "id_produit", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_ingredient", referencedColumnName = "id"))
 	private Set<Ingredient> ingredients = new HashSet<>();
 	@ManyToMany
+	@JoinTable(name = "produit_allergene", joinColumns = @JoinColumn(name = "id_produit", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_allergene", referencedColumnName = "id"))
+	private Set<Allergene> allergenes = new HashSet<>();
+	@ManyToMany
 	@JoinTable(name = "produit_additif", joinColumns = @JoinColumn(name = "id_produit", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_additif", referencedColumnName = "id"))
 	private Set<Additif> additifs = new HashSet<>();
 
@@ -154,6 +157,18 @@ public class Produit {
 
 	public void setIngredients(Set<Ingredient> ingredients) {
 		this.ingredients = ingredients;
+	}
+
+	public Set<Allergene> getAllergenes() {
+		return allergenes;
+	}
+	
+	public void addAllergene(Allergene allergene) {
+		this.getAllergenes().add(allergene);
+	}
+
+	public void setAllergenes(Set<Allergene> allergenes) {
+		this.allergenes = allergenes;
 	}
 
 	public Set<Additif> getAdditifs() {

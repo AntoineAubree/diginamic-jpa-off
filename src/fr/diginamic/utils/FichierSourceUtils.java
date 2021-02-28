@@ -11,6 +11,7 @@ import org.apache.commons.io.FileUtils;
 
 import fr.diginamic.dao.ProduitDao;
 import fr.diginamic.entites.Additif;
+import fr.diginamic.entites.Allergene;
 import fr.diginamic.entites.Categorie;
 import fr.diginamic.entites.Ingredient;
 import fr.diginamic.entites.Marque;
@@ -27,7 +28,7 @@ public class FichierSourceUtils {
 		}
 		
 		ProduitDao produitDao = new ProduitDao();
-		produitDao.insertSet(listeProduits);
+		produitDao.insererSet(listeProduits);
 	}
 
 	private static void traiterLigne(String ligne) {
@@ -44,14 +45,16 @@ public class FichierSourceUtils {
 		float proteines100g = FloatUtils.parse(decoupage[9]);
 		float sel100g = FloatUtils.parse(decoupage[10]);
 		String[] decoupageIngredients = decoupage[4].split(",|;");
+		String[] decoupageAllergenes = decoupage[28].split(",|;");
 		String[] decoupageAdditifs = decoupage[29].split(",|;");
 
 		Produit nouveauProduit = associerAttributsPrimairesAuProduit(nomProduit, nutritionGradeFr, energie100g,
 				graisse100g, sucres100g, fibres100g, proteines100g, sel100g);
 		nouveauProduit.setCategorie(new Categorie(nomCategorie));
 		nouveauProduit.setMarque(new Marque(nomMarque));
-//		associerIngredientsAuProduit(decoupageIngredients, nouveauProduit);
-//		associerAdditifsAuProduit(decoupageAdditifs, nouveauProduit);
+		associerIngredientsAuProduit(decoupageIngredients, nouveauProduit);
+		associerAllergenesAuProduit(decoupageAllergenes, nouveauProduit);
+		associerAdditifsAuProduit(decoupageAdditifs, nouveauProduit);
 		
 		listeProduits.add(nouveauProduit);
 		
@@ -82,6 +85,12 @@ public class FichierSourceUtils {
 	private static void associerIngredientsAuProduit(String[] decoupageIngredients, Produit nouveauProduit) {
 		for (String nomIngredient : decoupageIngredients) {
 			nouveauProduit.addIngredient(new Ingredient(StringUtils.nettoyerString(nomIngredient)));
+		}
+	}
+
+	private static void associerAllergenesAuProduit(String[] decoupageAllergenes, Produit nouveauProduit) {
+		for (String nomAllergene : decoupageAllergenes) {
+			nouveauProduit.addAllergene(new Allergene(StringUtils.nettoyerString(nomAllergene)));
 		}
 	}
 
