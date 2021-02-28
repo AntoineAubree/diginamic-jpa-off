@@ -3,10 +3,13 @@ package fr.diginamic.utils;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 
+import fr.diginamic.dao.ProduitDao;
 import fr.diginamic.entites.Additif;
 import fr.diginamic.entites.Categorie;
 import fr.diginamic.entites.Ingredient;
@@ -14,12 +17,17 @@ import fr.diginamic.entites.Marque;
 import fr.diginamic.entites.Produit;
 
 public class FichierSourceUtils {
+	
+	private static Set<Produit> listeProduits = new HashSet<>();
 
 	public static void traiterFichierSource(String chemin) throws IOException {
 		List<String> lignes = recupererLignes(chemin);
 		for (String ligne : lignes) {
 			traiterLigne(ligne);
 		}
+		
+		ProduitDao produitDao = new ProduitDao();
+		produitDao.insertSet(listeProduits);
 	}
 
 	private static void traiterLigne(String ligne) {
@@ -42,10 +50,10 @@ public class FichierSourceUtils {
 				graisse100g, sucres100g, fibres100g, proteines100g, sel100g);
 		nouveauProduit.setCategorie(new Categorie(nomCategorie));
 		nouveauProduit.setMarque(new Marque(nomMarque));
-		associerIngredientsAuProduit(decoupageIngredients, nouveauProduit);
-		associerAdditifsAuProduit(decoupageAdditifs, nouveauProduit);
+//		associerIngredientsAuProduit(decoupageIngredients, nouveauProduit);
+//		associerAdditifsAuProduit(decoupageAdditifs, nouveauProduit);
 		
-		
+		listeProduits.add(nouveauProduit);
 		
 	}
 

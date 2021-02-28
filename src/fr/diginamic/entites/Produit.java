@@ -159,7 +159,7 @@ public class Produit {
 	public Set<Additif> getAdditifs() {
 		return additifs;
 	}
-	
+
 	public void addAdditif(Additif additif) {
 		this.getAdditifs().add(additif);
 	}
@@ -191,6 +191,37 @@ public class Produit {
 		builder.append(sel100g);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((marque == null) ? 0 : marque.hashCode());
+		result = prime * result + ((nom == null) ? 0 : nom.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Produit other = (Produit) obj;
+		if (marque == null) {
+			if (other.marque != null)
+				return false;
+		} else if (!marque.equals(other.marque))
+			return false;
+		if (nom == null) {
+			if (other.nom != null)
+				return false;
+		} else if (!nom.equals(other.nom))
+			return false;
+		return true;
 	}
 
 }
