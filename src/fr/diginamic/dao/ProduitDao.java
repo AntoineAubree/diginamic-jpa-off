@@ -16,6 +16,7 @@ public class ProduitDao extends AbstractDao {
 	private CategorieDao categorieDao = new CategorieDao(em);
 	private IngredientDao ingredientDao = new IngredientDao(em);
 	private AdditifDao additifDao = new AdditifDao(em);
+	private AllergeneDao allergeneDao = new AllergeneDao(em);
 
 	public ProduitDao() {
 	}
@@ -39,6 +40,7 @@ public class ProduitDao extends AbstractDao {
 				categorieDao.insererDepuisProduit(produit);
 				ingredientDao.insererListeDepuisProduit(produit);
 //				additifDao.insererListeDepuisProduit(produit);
+//				allergeneDao.insererListeDepuisProduit(produit);
 				
 				em.persist(produit);
 			}
