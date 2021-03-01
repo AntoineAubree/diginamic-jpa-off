@@ -1,71 +1,41 @@
 package fr.diginamic;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-
-import fr.diginamic.entites.Additif;
-import fr.diginamic.entites.Categorie;
-import fr.diginamic.entites.Ingredient;
-import fr.diginamic.entites.Marque;
-import fr.diginamic.entites.Produit;
-import fr.diginamic.utils.ConfigUtils;
+import fr.diginamic.dao.AdditifDao;
+import fr.diginamic.dao.CategorieDao;
+import fr.diginamic.dao.IngredientDao;
+import fr.diginamic.dao.MarqueDao;
+import fr.diginamic.dao.ProduitDao;
 import fr.diginamic.utils.FichierSourceUtils;
 
 public class IntegrationOpenFoodFacts {
 
 	public static void main(String[] args) {
+		long debut = System.currentTimeMillis();
 		String chemin = "resources/open-food-facts.csv";
-
-		Set<Categorie> categories = new HashSet<>();
-		Set<Marque> marques = new HashSet<>();
-		Set<Ingredient> ingredients = new HashSet<>();
-		Set<Additif> additifs = new HashSet<>();
-		List<Produit> produits = new ArrayList<>();
+		FichierSourceUtils fichierSourceUtils = new FichierSourceUtils(chemin);
 
 		try {
-			FichierSourceUtils.traiterFichierSource(chemin, categories, marques, ingredients, additifs, produits);
+			fichierSourceUtils.traiterFichierSource();
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
 
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("off", ConfigUtils.getPassword());
-		EntityManager em = emf.createEntityManager();
-		EntityTransaction transaction = em.getTransaction();
+		MarqueDao marqueDao = new MarqueDao();
+		marqueDao.insert(fichierSourceUtils.getMarques());
+		CategorieDao categorieDao = new CategorieDao();
+		categorieDao.insert(fichierSourceUtils.getCategories());
+		IngredientDao ingredientDao = new IngredientDao();
+		ingredientDao.insert(fichierSourceUtils.getIngredients());
+		AdditifDao additifDao = new AdditifDao();
+		additifDao.insert(fichierSourceUtils.getAdditifs());
 
-		transaction.begin();
+		ProduitDao produitDao = new ProduitDao();
+		produitDao.insert(fichierSourceUtils.getProduits());
 
-		for (Categorie categorie : categories) {
-			em.persist(categorie);
-		}
-
-		for (Marque marque : marques) {
-			em.persist(marque);
-		}
-
-		for (Ingredient ingredient : ingredients) {
-			em.persist(ingredient);
-		}
-
-		for (Additif additif : additifs) {
-			em.persist(additif);
-		}
-
-		for (Produit produit : produits) {
-			em.persist(produit);
-		}
-
-		transaction.commit();
-
-		em.close();
+		System.out.println(System.currentTimeMillis() - debut);
 
 	}
 
