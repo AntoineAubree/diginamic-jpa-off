@@ -11,6 +11,9 @@ import fr.diginamic.utils.FichierSourceUtils;
 
 public class IntegrationOpenFoodFacts {
 
+	/*
+	 * Récupère les données contnues dans un fichier au format csv et les stockes dans une BDD
+	 */
 	public static void main(String[] args) {
 		long debut = System.currentTimeMillis();
 		String chemin = "resources/open-food-facts.csv";
