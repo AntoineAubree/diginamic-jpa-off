@@ -16,6 +16,10 @@ public class AdditifDao extends AbstractDao {
 	public AdditifDao() {
 	}
 
+	/**
+	 * insert un Set de Additif dans la BDD
+	 * @param additifs Set de Additif
+	 */
 	public void insert(Set<Additif> additifs) {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();

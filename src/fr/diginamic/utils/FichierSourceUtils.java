@@ -28,6 +28,14 @@ public class FichierSourceUtils {
 		this.chemin = chemin;
 	}
 
+	/**
+	 * Ajoute las Categories d'un fichier au Set de Categorie de la Classe FichierSourceUtils<br>
+	 * Ajoute les Marques d'un fichier au Set de Marque de la Classe FichierSourceUtils<br>
+	 * Ajoute les Ingredients d'un fichier au Set de Ingredient de la Classe FichierSourceUtils<br>
+	 * Ajoute les Additifs d'un fichier au Set de Additif de la Classe FichierSourceUtils<br>
+	 * Ajoute les produits d'un fichier au Set de Produit de la classe FichierSourceUtils<br>
+	 * @throws IOException
+	 */
 	public void traiterFichierSource() throws IOException {
 		List<String> lignes = recupererLignes();
 		for (String ligne : lignes) {
@@ -35,6 +43,11 @@ public class FichierSourceUtils {
 		}
 	}
 
+	/**
+	 * 
+	 * @return la liste des lignes du fichier source sous forme de String
+	 * @throws IOException
+	 */
 	private List<String> recupererLignes() throws IOException {
 		File file = new File(this.chemin);
 		List<String> lignes = new ArrayList<>();
@@ -43,6 +56,15 @@ public class FichierSourceUtils {
 		return lignes;
 	}
 
+	/**
+	 * Ajoute la Categorie de la ligne au Set de Categorie de la Classe<br>
+	 * Ajoute la Marque de la ligne au Set de Marque de la Classe<br>
+	 * Ajoute les Ingredients de la ligne au Set de Ingredient de la Classe<br>
+	 * Ajoute les Additifs de la ligne au Set de Additif de la Classe<br>
+	 * Associe au produit de la ligne tous ses attributs sous forme d'objet<br>
+	 * Ajoute le produit de la ligne au Set de Produit de la classe<br>
+	 * @param ligne
+	 */
 	private void traiterLigne(String ligne) {
 
 		String[] decoupage = ligne.split("\\|");
@@ -59,10 +81,10 @@ public class FichierSourceUtils {
 		String[] decoupageIngredients = decoupage[4].split(",|;");
 		String[] decoupageAdditifs = decoupage[29].split(",|;");
 
-		addCategorie(nomCategorie);
-		addMarque(nomMarque);
-		addIngredients(decoupageIngredients);
-		addAdditifs(decoupageAdditifs);
+		this.addCategorie(nomCategorie);
+		this.addMarque(nomMarque);
+		this.addIngredients(decoupageIngredients);
+		this.addAdditifs(decoupageAdditifs);
 
 		Produit nouveauProduit = addProduit(nomProduit, nutritionGradeFr, energie100g, graisse100g, sucres100g,
 				fibres100g, proteines100g, sel100g);
@@ -105,6 +127,10 @@ public class FichierSourceUtils {
 		return categories;
 	}
 
+	/**
+	 * Ajouter une Categorie au Set de Categorie de la Classe FichierSourceUtils
+	 * @param nomCategorie
+	 */
 	public void addCategorie(String nomCategorie) {
 		this.categories.add(new Categorie(nomCategorie));
 	}
@@ -117,6 +143,10 @@ public class FichierSourceUtils {
 		return marques;
 	}
 
+	/**
+	 * Ajouter une Marque au Set de Marque de la Classe FichierSourceUtils
+	 * @param nomMarque
+	 */
 	public void addMarque(String nomMarque) {
 		this.marques.add(new Marque(nomMarque));
 	}
@@ -129,6 +159,10 @@ public class FichierSourceUtils {
 		return ingredients;
 	}
 
+	/**
+	 * Ajouter des Ingredients au Set de Ingredient de la Classe FichierSourceUtils
+	 * @param nomsIngredients
+	 */
 	public void addIngredients(String[] nomsIngredients) {
 		for (String nomIngredient : nomsIngredients) {
 			this.ingredients.add(new Ingredient(StringUtils.nettoyerString(nomIngredient)));
@@ -143,6 +177,10 @@ public class FichierSourceUtils {
 		return additifs;
 	}
 
+	/**
+	 * Ajouter des Additifs au Set de Additif de la Classe FichierSourceUtils
+	 * @param nomsAdditifs
+	 */
 	public void addAdditifs(String[] nomsAdditifs) {
 		for (String nomAdditif : nomsAdditifs) {
 			this.additifs.add(new Additif(StringUtils.nettoyerString(nomAdditif)));
@@ -157,6 +195,19 @@ public class FichierSourceUtils {
 		return produits;
 	}
 
+	/**
+	 * Ajouter un Produit au Set de Produit de la Classe FichierSourceUtils<br>
+	 * Associer au produit tous ses attributs primaires
+	 * @param nomProduit
+	 * @param nutritionGradeFr
+	 * @param energie100g
+	 * @param graisse100g
+	 * @param sucres100g
+	 * @param fibres100g
+	 * @param proteines100g
+	 * @param sel100g
+	 * @return
+	 */
 	private Produit addProduit(String nomProduit, String nutritionGradeFr, float energie100g, float graisse100g,
 			float sucres100g, float fibres100g, float proteines100g, float sel100g) {
 		Produit nouveauProduit = new Produit(nomProduit);

@@ -16,6 +16,10 @@ public class CategorieDao extends AbstractDao {
 	public CategorieDao() {
 	}
 
+	/**
+	 * insert un Set de Categorie dans la BDD
+	 * @param categories Set de Categorie
+	 */
 	public void insert(Set<Categorie> categories) {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();

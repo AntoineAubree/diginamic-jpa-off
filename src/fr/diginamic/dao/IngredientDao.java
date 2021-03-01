@@ -16,6 +16,10 @@ public class IngredientDao extends AbstractDao {
 	public IngredientDao() {
 	}
 
+	/**
+	 * insert un Set de Ingredient dans la BDD
+	 * @param ingredients Set de Ingredient
+	 */
 	public void insert(Set<Ingredient> ingredients) {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();

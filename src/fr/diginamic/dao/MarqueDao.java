@@ -16,6 +16,10 @@ public class MarqueDao extends AbstractDao {
 	public MarqueDao() {
 	}
 
+	/**
+	 * insert un Set de Marque dans la BDD
+	 * @param marques Set de Marque
+	 */
 	public void insert(Set<Marque> marques) {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();

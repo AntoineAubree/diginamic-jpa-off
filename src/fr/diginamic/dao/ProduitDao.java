@@ -26,6 +26,10 @@ public class ProduitDao extends AbstractDao {
 	public ProduitDao() {
 	}
 
+	/**
+	 * insert un Set de Produit dans la BDD
+	 * @param produits Set de Produit
+	 */
 	public void insert(Set<Produit> produits) {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
