@@ -68,9 +68,9 @@ public class FichierSourceUtils {
 	private void traiterLigne(String ligne) {
 
 		String[] decoupage = ligne.split("\\|");
-		String nomCategorie = StringUtils.nettoyerString(decoupage[0].toLowerCase());
-		String nomMarque = StringUtils.nettoyerString(decoupage[1].toLowerCase());
-		String nomProduit = decoupage[2].toLowerCase();
+		String nomCategorie = decoupage[0].toLowerCase().trim();
+		String nomMarque = decoupage[1].toLowerCase().trim();
+		String nomProduit = decoupage[2].toLowerCase().trim();
 		String nutritionGradeFr = decoupage[3].toUpperCase();
 		float energie100g = FloatUtils.parse(decoupage[5]);
 		float graisse100g = FloatUtils.parse(decoupage[6]);

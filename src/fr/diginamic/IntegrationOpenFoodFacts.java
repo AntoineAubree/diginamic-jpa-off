@@ -25,7 +25,9 @@ public class IntegrationOpenFoodFacts {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
-
+		
+		System.out.println(fichierSourceUtils.getIngredients().size());
+		
 		MarqueDao marqueDao = new MarqueDao();
 		marqueDao.insert(fichierSourceUtils.getMarques());
 		CategorieDao categorieDao = new CategorieDao();
