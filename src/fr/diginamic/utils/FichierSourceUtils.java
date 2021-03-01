@@ -53,8 +53,8 @@ public class FichierSourceUtils {
 		nouveauProduit.setCategorie(new Categorie(nomCategorie));
 		nouveauProduit.setMarque(new Marque(nomMarque));
 		associerIngredientsAuProduit(decoupageIngredients, nouveauProduit);
-		associerAllergenesAuProduit(decoupageAllergenes, nouveauProduit);
-		associerAdditifsAuProduit(decoupageAdditifs, nouveauProduit);
+//		associerAllergenesAuProduit(decoupageAllergenes, nouveauProduit);
+//		associerAdditifsAuProduit(decoupageAdditifs, nouveauProduit);
 		
 		listeProduits.add(nouveauProduit);
 		

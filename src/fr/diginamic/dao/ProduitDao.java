@@ -12,10 +12,10 @@ import fr.diginamic.entites.Produit;
 public class ProduitDao extends AbstractDao {
 
 	private EntityManager em = emf.createEntityManager();
-	private MarqueDao marqueDao = new MarqueDao();
-	private CategorieDao categorieDao = new CategorieDao();
-	private IngredientDao ingredientDao = new IngredientDao();
-	private AdditifDao additifDao = new AdditifDao();
+	private MarqueDao marqueDao = new MarqueDao(em);
+	private CategorieDao categorieDao = new CategorieDao(em);
+	private IngredientDao ingredientDao = new IngredientDao(em);
+	private AdditifDao additifDao = new AdditifDao(em);
 
 	public ProduitDao() {
 	}
@@ -38,7 +38,7 @@ public class ProduitDao extends AbstractDao {
 				marqueDao.insererDepuisProduit(produit);
 				categorieDao.insererDepuisProduit(produit);
 				ingredientDao.insererListeDepuisProduit(produit);
-				additifDao.insererListeDepuisProduit(produit);
+//				additifDao.insererListeDepuisProduit(produit);
 				
 				em.persist(produit);
 			}
