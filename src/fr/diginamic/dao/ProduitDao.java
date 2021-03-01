@@ -23,10 +23,10 @@ public class ProduitDao extends AbstractDao {
 
 	public void insererSet(Set<Produit> produits) {
 		EntityTransaction transaction = em.getTransaction();
-		transaction.begin();
 		
 		int compteur = 1;
 		for (Produit produit : produits) {
+			transaction.begin();
 			System.out.println(compteur++);
 			TypedQuery<Produit> query = em.createQuery("SELECT p FROM Produit p Join p.marque m WHERE p.nom = :nom_produit AND m.nom = :nom_marque",
 					Produit.class);
@@ -45,9 +45,9 @@ public class ProduitDao extends AbstractDao {
 				em.persist(produit);
 			}
 			
+			transaction.commit();
 		}
 
-		transaction.commit();
 	}
 
 }
